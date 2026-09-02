@@ -14,221 +14,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Approve the fixed Watchletic CLI public client */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        clientId: "watchletic-cli";
-                        /** Format: uri */
-                        redirectUri: string;
-                        codeChallenge: string;
-                        /** @enum {string} */
-                        codeChallengeMethod: "S256";
-                        /**
-                         * @default read
-                         * @enum {string}
-                         */
-                        accessMode?: "read" | "full";
-                        sessionName: string;
-                        state?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["authorizeCli"];
         delete?: never;
         options?: never;
         head?: never;
@@ -245,230 +31,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Exchange a PKCE code or rotate a refresh token */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        grantType: "authorization_code";
-                        /** @enum {string} */
-                        clientId: "watchletic-cli";
-                        code: string;
-                        /** Format: uri */
-                        redirectUri: string;
-                        codeVerifier: string;
-                    } | {
-                        /** @enum {string} */
-                        grantType: "refresh_token";
-                        /** @enum {string} */
-                        clientId: "watchletic-cli";
-                        refreshToken: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["exchangeOrRefreshToken"];
         delete?: never;
         options?: never;
         head?: never;
@@ -483,202 +46,7 @@ export interface paths {
             cookie?: never;
         };
         /** List authorized CLI sessions in the Watchletic app */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listApiSessions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -698,202 +66,7 @@ export interface paths {
         put?: never;
         post?: never;
         /** Revoke an authorized CLI session in the Watchletic app */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description No content. */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["revokeApiSession"];
         options?: never;
         head?: never;
         patch?: never;
@@ -909,206 +82,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Revoke a CLI session using its access or refresh credential */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        refreshToken?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description No content. */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["revokeCurrentApiSession"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1123,220 +97,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get identity, Premium state, and API access */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getMe"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1353,220 +114,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get capabilities, enums, formats, and sanitized integration catalog */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getCatalog"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1583,518 +131,14 @@ export interface paths {
             cookie?: never;
         };
         /** Get Watchletic settings */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getSettings"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         /** Update Watchletic settings */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        isMetric?: boolean | null;
-                        isTemperatureCelsius?: boolean | null;
-                        maxHeartRate?: number | null;
-                        isHRZonesPercentage?: boolean | null;
-                        amountHRZones?: 2 | 3 | 4 | 5 | 6 | 7 | null;
-                        heartRateZone1?: number | null;
-                        heartRateZone2?: number | null;
-                        heartRateZone3?: number | null;
-                        heartRateZone4?: number | null;
-                        heartRateZone5?: number | null;
-                        heartRateZone6?: number | null;
-                        heartRateZone7?: number | null;
-                        forceGpsForSpeed?: boolean | null;
-                        gpsKalmanSmoothingEnabled?: boolean | null;
-                        isSpeechEnabled?: boolean | null;
-                        isSpeechMale?: boolean | null;
-                        announceGoalEveryInterval?: boolean | null;
-                        announceTargetEveryInterval?: boolean | null;
-                        announcePaceEveryKmMi?: boolean | null;
-                        announceBpmEveryKmMi?: boolean | null;
-                        announcePowerEveryKmMi?: boolean | null;
-                        announcePreviousBpmEveryInterval?: boolean | null;
-                        announcePreviousPaceEveryInterval?: boolean | null;
-                        announcePreviousPowerEveryInterval?: boolean | null;
-                        nextIntervalMessageDurationMillis?: number | null;
-                        announceHalfwayToGoal?: boolean | null;
-                        announcePacingStrategySplits?: boolean | null;
-                        outsideTargetAnnounceOnceAfterSeconds?: number | null;
-                        outsideTargetAnnounceReminderEverySeconds?: number | null;
-                        outsideTargetAnnounceInRangeOnceAfterSeconds?: number | null;
-                        outsideTargetAnnounceInRangeEverySeconds?: number | null;
-                        outsideTargetAnnounceDirection?: 0 | 1 | 2 | null;
-                        useLegacyPaceTargetAnnouncements?: boolean | null;
-                        showOutsideTargetMessage?: boolean | null;
-                        showOutsideTargetDiff?: boolean | null;
-                        showCountdownBeforeNextInterval?: boolean | null;
-                        alwaysTriggerNextLapManually?: boolean | null;
-                        showCircularNextLapButton?: boolean | null;
-                        wearOSKeepScreenOn?: boolean | null;
-                        autoLockOnWorkoutStart?: boolean | null;
-                        pushToAppleWorkout?: boolean | null;
-                        /** @enum {string|null} */
-                        appleWorkoutAlertMetric?: "current" | "average" | null;
-                        preferIntervalAsTarget?: boolean | null;
-                        intervalCountInRepeatOnly?: boolean | null;
-                        autoPauseEnabled?: boolean | null;
-                        ultraActionButtonAction?: 0 | 1 | 2 | null;
-                        crownSideButtonAction?: 0 | 1 | null;
-                        runningPowerCP?: number | null;
-                        strydCalibrationFactor?: number | null;
-                        onlyExportRunningPowerIfStryd?: boolean | null;
-                        useEngoColorGrid?: boolean | null;
-                        engoBrightness?: "auto" | string | null;
-                        /** @enum {string|null} */
-                        weekStartsOn?: "monday" | "sunday" | "rolling" | null;
-                        playSpeechOnPhoneIfAvailable?: boolean | null;
-                        pauseAppleWatchSpokenAudioDuringAnnouncements?: boolean | null;
-                        addToImportedSinglePaceRange?: number | null;
-                        addToImportedSingleSpeedRange?: number | null;
-                        addToImportedSingleBPMRange?: number | null;
-                        addToImportedSinglePowerRange?: number | null;
-                        liveTrackingEnabled?: boolean | null;
-                        liveTrackingDisplayName?: string | null;
-                        liveTrackingRecipients?: {
-                            id: string;
-                            /** Format: email */
-                            email: string;
-                            label?: string | null;
-                            enabled?: boolean | null;
-                        }[] | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateSettings"];
         trace?: never;
     };
     "/structured-workouts": {
@@ -2105,477 +149,10 @@ export interface paths {
             cookie?: never;
         };
         /** List scheduled and unscheduled structured workouts */
-        get: {
-            parameters: {
-                query?: {
-                    from?: string;
-                    to?: string;
-                    scheduled?: boolean;
-                    limit?: number;
-                    cursor?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listStructuredWorkouts"];
         put?: never;
         /** Create a structured workout */
-        post: {
-            parameters: {
-                query?: {
-                    from?: string;
-                    to?: string;
-                    scheduled?: boolean;
-                    limit?: number;
-                    cursor?: string;
-                };
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title: string;
-                        /** @enum {string} */
-                        activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                        /**
-                         * @default unknown
-                         * @enum {string}
-                         */
-                        locationType?: "unknown" | "indoor" | "outdoor";
-                        /** @default true */
-                        isMetric?: boolean;
-                        /** @default false */
-                        isRecurring?: boolean;
-                        parts: components["schemas"]["WorkoutPart"][];
-                        /** @default null */
-                        recurringUntil?: string | null;
-                        /** @default null */
-                        date?: string | null;
-                        /** Format: date-time */
-                        completedAt?: string | null;
-                        /** @default null */
-                        external?: string | null;
-                        notes?: string | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createStructuredWorkout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2590,693 +167,15 @@ export interface paths {
             cookie?: never;
         };
         /** Get a structured workout */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getStructuredWorkout"];
         put?: never;
         post?: never;
         /** Soft-delete a structured workout */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteStructuredWorkout"];
         options?: never;
         head?: never;
         /** Update or schedule a structured workout */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title?: string;
-                        /** @enum {string} */
-                        activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                        /**
-                         * @default unknown
-                         * @enum {string}
-                         */
-                        locationType?: "unknown" | "indoor" | "outdoor";
-                        /** @default true */
-                        isMetric?: boolean;
-                        /** @default false */
-                        isRecurring?: boolean;
-                        parts?: components["schemas"]["WorkoutPart"][];
-                        /** @default null */
-                        recurringUntil?: string | null;
-                        /** @default null */
-                        date?: string | null;
-                        /** Format: date-time */
-                        completedAt?: string | null;
-                        /** @default null */
-                        external?: string | null;
-                        notes?: string | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateStructuredWorkout"];
         trace?: never;
     };
     "/structured-workouts/{id}/clone": {
@@ -3289,231 +188,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Clone a structured workout */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title?: string;
-                        date?: string | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["cloneStructuredWorkout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3528,222 +203,7 @@ export interface paths {
             cookie?: never;
         };
         /** Export a Watchletic share code */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["exportStructuredWorkoutShareCode"];
         put?: never;
         post?: never;
         delete?: never;
@@ -3762,228 +222,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Import a Watchletic share code */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        code: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["importStructuredWorkoutShareCode"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4000,291 +239,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Validate an atomic batch and preview the schedule diff */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        operations: ({
-                            /** @enum {string} */
-                            action: "create";
-                            /** Format: uuid */
-                            id?: string;
-                            workout: {
-                                title: string;
-                                /** @enum {string} */
-                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                                /**
-                                 * @default unknown
-                                 * @enum {string}
-                                 */
-                                locationType?: "unknown" | "indoor" | "outdoor";
-                                /** @default true */
-                                isMetric?: boolean;
-                                /** @default false */
-                                isRecurring?: boolean;
-                                parts: components["schemas"]["WorkoutPart"][];
-                                /** @default null */
-                                recurringUntil?: string | null;
-                                /** @default null */
-                                date?: string | null;
-                                /** Format: date-time */
-                                completedAt?: string | null;
-                                /** @default null */
-                                external?: string | null;
-                                notes?: string | null;
-                            };
-                        } | {
-                            /** @enum {string} */
-                            action: "update";
-                            id: string;
-                            /** Format: date-time */
-                            expectedRevision: string;
-                            workout: {
-                                title?: string;
-                                /** @enum {string} */
-                                activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                                /**
-                                 * @default unknown
-                                 * @enum {string}
-                                 */
-                                locationType?: "unknown" | "indoor" | "outdoor";
-                                /** @default true */
-                                isMetric?: boolean;
-                                /** @default false */
-                                isRecurring?: boolean;
-                                parts?: components["schemas"]["WorkoutPart"][];
-                                /** @default null */
-                                recurringUntil?: string | null;
-                                /** @default null */
-                                date?: string | null;
-                                /** Format: date-time */
-                                completedAt?: string | null;
-                                /** @default null */
-                                external?: string | null;
-                                notes?: string | null;
-                            };
-                        } | {
-                            /** @enum {string} */
-                            action: "delete";
-                            id: string;
-                            /** Format: date-time */
-                            expectedRevision: string;
-                        })[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["validateStructuredWorkoutBatch"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4301,295 +256,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Apply a previously validated batch atomically */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** Format: uuid */
-                        validationId?: string;
-                        operations: ({
-                            /** @enum {string} */
-                            action: "create";
-                            /** Format: uuid */
-                            id?: string;
-                            workout: {
-                                title: string;
-                                /** @enum {string} */
-                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                                /**
-                                 * @default unknown
-                                 * @enum {string}
-                                 */
-                                locationType?: "unknown" | "indoor" | "outdoor";
-                                /** @default true */
-                                isMetric?: boolean;
-                                /** @default false */
-                                isRecurring?: boolean;
-                                parts: components["schemas"]["WorkoutPart"][];
-                                /** @default null */
-                                recurringUntil?: string | null;
-                                /** @default null */
-                                date?: string | null;
-                                /** Format: date-time */
-                                completedAt?: string | null;
-                                /** @default null */
-                                external?: string | null;
-                                notes?: string | null;
-                            };
-                        } | {
-                            /** @enum {string} */
-                            action: "update";
-                            id: string;
-                            /** Format: date-time */
-                            expectedRevision: string;
-                            workout: {
-                                title?: string;
-                                /** @enum {string} */
-                                activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                                /**
-                                 * @default unknown
-                                 * @enum {string}
-                                 */
-                                locationType?: "unknown" | "indoor" | "outdoor";
-                                /** @default true */
-                                isMetric?: boolean;
-                                /** @default false */
-                                isRecurring?: boolean;
-                                parts?: components["schemas"]["WorkoutPart"][];
-                                /** @default null */
-                                recurringUntil?: string | null;
-                                /** @default null */
-                                date?: string | null;
-                                /** Format: date-time */
-                                completedAt?: string | null;
-                                /** @default null */
-                                external?: string | null;
-                                notes?: string | null;
-                            };
-                        } | {
-                            /** @enum {string} */
-                            action: "delete";
-                            id: string;
-                            /** Format: date-time */
-                            expectedRevision: string;
-                        })[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["applyStructuredWorkoutBatch"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4604,226 +271,7 @@ export interface paths {
             cookie?: never;
         };
         /** List completed activities */
-        get: {
-            parameters: {
-                query?: {
-                    from?: string;
-                    to?: string;
-                    activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                    limit?: number;
-                    cursor?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listActivities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4840,673 +288,15 @@ export interface paths {
             cookie?: never;
         };
         /** Get activity metadata */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getActivity"];
         put?: never;
         post?: never;
         /** Soft-delete an activity */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteActivity"];
         options?: never;
         head?: never;
         /** Update user-editable activity fields */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title?: string | null;
-                        analyticsExcluded?: boolean;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateActivity"];
         trace?: never;
     };
     "/activities/{id}/raw": {
@@ -5517,224 +307,7 @@ export interface paths {
             cookie?: never;
         };
         /** Extract raw cloud samples as Watchletic, JSON, NDJSON, or flat CSV */
-        get: {
-            parameters: {
-                query?: {
-                    format?: "watchletic" | "json" | "ndjson" | "csv";
-                };
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description File response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description File response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description File response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getActivityRawData"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5751,224 +324,7 @@ export interface paths {
             cookie?: never;
         };
         /** Export FIT, GPX, TCX, Alpha1 CSV, or native Watchletic */
-        get: {
-            parameters: {
-                query: {
-                    format: "fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic";
-                };
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description File response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description File response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description File response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/octet-stream": string;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["exportActivity"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5985,449 +341,10 @@ export interface paths {
             cookie?: never;
         };
         /** List routes */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listRoutes"];
         put?: never;
         /** Create a route */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        name: string;
-                        distanceMeters: number;
-                        latitudes: number[];
-                        longitudes: number[];
-                        elevations: number[];
-                        minHillElevationDiff?: number | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createRoute"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6442,677 +359,15 @@ export interface paths {
             cookie?: never;
         };
         /** Get a route */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getRoute"];
         put?: never;
         post?: never;
         /** Soft-delete a route */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteRoute"];
         options?: never;
         head?: never;
         /** Update a route */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        name?: string;
-                        distanceMeters?: number;
-                        latitudes?: number[];
-                        longitudes?: number[];
-                        elevations?: number[];
-                        minHillElevationDiff?: number | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateRoute"];
         trace?: never;
     };
     "/layouts": {
@@ -7123,454 +378,10 @@ export interface paths {
             cookie?: never;
         };
         /** List layouts */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listLayouts"];
         put?: never;
         /** Create a layout */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title?: string | null;
-                        /** @enum {string|null} */
-                        activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing" | null;
-                        /** @enum {string|null} */
-                        locationType?: "unknown" | "indoor" | "outdoor" | null;
-                        connectedDevices?: string[] | null;
-                        goalType?: string | null;
-                        targetType?: string | null;
-                        stepName?: string | null;
-                        layouts: string[];
-                        values: string[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createLayout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7585,682 +396,15 @@ export interface paths {
             cookie?: never;
         };
         /** Get a layout */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getLayout"];
         put?: never;
         post?: never;
         /** Soft-delete a layout */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteLayout"];
         options?: never;
         head?: never;
         /** Update a layout */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        title?: string | null;
-                        /** @enum {string|null} */
-                        activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing" | null;
-                        /** @enum {string|null} */
-                        locationType?: "unknown" | "indoor" | "outdoor" | null;
-                        connectedDevices?: string[] | null;
-                        goalType?: string | null;
-                        targetType?: string | null;
-                        stepName?: string | null;
-                        layouts?: string[];
-                        values?: string[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateLayout"];
         trace?: never;
     };
     "/devices": {
@@ -8271,454 +415,10 @@ export interface paths {
             cookie?: never;
         };
         /** List devices */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listDevices"];
         put?: never;
         /** Create a device */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        deviceId?: string;
-                        name: string;
-                        /** @enum {string|null} */
-                        type?: "activeLook" | "heartRateMonitor" | "treadmill" | "cyclingPowerMeter" | "stryd" | "coreBodyTemperature" | null;
-                        /** @default [] */
-                        activities?: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
-                        capabilities?: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[] | null;
-                        reportedFeatures?: ("rrIntervals" | "energyExpended" | "sensorContact" | "bodySensorLocation")[] | null;
-                        enabledSignalsByActivity?: {
-                            [key: string]: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[];
-                        } | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createDevice"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8733,680 +433,15 @@ export interface paths {
             cookie?: never;
         };
         /** Get a device */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getDevice"];
         put?: never;
         post?: never;
         /** Soft-delete a device */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteDevice"];
         options?: never;
         head?: never;
         /** Update a device */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        name?: string;
-                        /** @enum {string|null} */
-                        type?: "activeLook" | "heartRateMonitor" | "treadmill" | "cyclingPowerMeter" | "stryd" | "coreBodyTemperature" | null;
-                        activities?: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
-                        capabilities?: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[] | null;
-                        reportedFeatures?: ("rrIntervals" | "energyExpended" | "sensorContact" | "bodySensorLocation")[] | null;
-                        enabledSignalsByActivity?: {
-                            [key: string]: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[];
-                        } | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateDevice"];
         trace?: never;
     };
     "/routes/import": {
@@ -9419,229 +454,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Import a GPX route */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        gpx: string;
-                        name?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["importRouteGpx"];
         delete?: never;
         options?: never;
         head?: never;
@@ -9656,222 +469,7 @@ export interface paths {
             cookie?: never;
         };
         /** Export a route as GPX */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description File response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/gpx+xml": string;
-                    };
-                };
-                /** @description File response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/gpx+xml": string;
-                    };
-                };
-                /** @description File response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/gpx+xml": string;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["exportRouteGpx"];
         put?: never;
         post?: never;
         delete?: never;
@@ -9888,449 +486,10 @@ export interface paths {
             cookie?: never;
         };
         /** List readiness entries */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listReadiness"];
         put?: never;
         /** Create a readiness entry */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        date: string;
-                        hrvMs?: number | null;
-                        /** @enum {string|null} */
-                        hrvType?: "sdnn" | "rmssd" | null;
-                        restingHrBpm?: number | null;
-                        sleepSeconds?: number | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createReadiness"];
         delete?: never;
         options?: never;
         head?: never;
@@ -10348,458 +507,11 @@ export interface paths {
         put?: never;
         post?: never;
         /** Delete a readiness entry */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["deleteReadiness"];
         options?: never;
         head?: never;
         /** Update a readiness entry */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        date?: string;
-                        hrvMs?: number | null;
-                        /** @enum {string|null} */
-                        hrvType?: "sdnn" | "rmssd" | null;
-                        restingHrBpm?: number | null;
-                        sleepSeconds?: number | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateReadiness"];
         trace?: never;
     };
     "/analytics": {
@@ -10810,220 +522,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get deterministic analytics profiles */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getAnalytics"];
         put?: never;
         post?: never;
         delete?: never;
@@ -11040,225 +539,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get deterministic fitness analytics */
-        get: {
-            parameters: {
-                query?: {
-                    scope?: string;
-                    range?: "90d" | "6m" | "1y" | "all";
-                    anchorDate?: string;
-                    timeZone?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getFitnessAnalytics"];
         put?: never;
         post?: never;
         delete?: never;
@@ -11277,229 +558,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Queue an analytics rebuild */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["rebuildAnalytics"];
         delete?: never;
         options?: never;
         head?: never;
@@ -11514,220 +573,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get training-load settings and source selection */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getTrainingLoad"];
         put?: never;
         post?: never;
         delete?: never;
@@ -11746,230 +592,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Initialize training load */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        initializationKind: "existingAccount" | "newAccount";
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["initializeTrainingLoad"];
         delete?: never;
         options?: never;
         head?: never;
@@ -11990,229 +613,7 @@ export interface paths {
         options?: never;
         head?: never;
         /** Update a training-load reference */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateTrainingLoadReference"];
         trace?: never;
     };
     "/training-load/sports/{activityType}": {
@@ -12229,231 +630,7 @@ export interface paths {
         options?: never;
         head?: never;
         /** Update sport source ordering */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    activityType: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateTrainingLoadSport"];
         trace?: never;
     };
     "/training-load/activities/{id}": {
@@ -12464,222 +641,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get activity training load */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getActivityTrainingLoad"];
         put?: never;
         post?: never;
         delete?: never;
@@ -12698,224 +660,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Recalculate activity training load */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["recalculateActivityTrainingLoad"];
         delete?: never;
         options?: never;
         head?: never;
@@ -12936,231 +681,7 @@ export interface paths {
         options?: never;
         head?: never;
         /** Select an activity training-load source */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        source: string | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["selectActivityTrainingLoadSource"];
         trace?: never;
     };
     "/integrations": {
@@ -13171,220 +692,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get sanitized integration connection status */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listIntegrations"];
         put?: never;
         post?: never;
         delete?: never;
@@ -13403,224 +711,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Get a hosted browser connection URL */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["connectIntegration"];
         delete?: never;
         options?: never;
         head?: never;
@@ -13641,231 +732,7 @@ export interface paths {
         options?: never;
         head?: never;
         /** Update integration options */
-        patch: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        [key: string]: boolean | number | string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        patch: operations["updateIntegrationOptions"];
         trace?: never;
     };
     "/integrations/{id}/import": {
@@ -13878,224 +745,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Import structured workouts from an integration */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["importIntegrationWorkouts"];
         delete?: never;
         options?: never;
         head?: never;
@@ -14112,225 +762,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Export an activity to an integration */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path: {
-                    id: string;
-                    activityId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["exportActivityToIntegration"];
         delete?: never;
         options?: never;
         head?: never;
@@ -14348,225 +780,7 @@ export interface paths {
         put?: never;
         post?: never;
         /** Disconnect an integration */
-        delete: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                    "if-match": string;
-                };
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["disconnectIntegration"];
         options?: never;
         head?: never;
         patch?: never;
@@ -14580,220 +794,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get live-tracking settings */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getLiveTrackingSettings"];
         put?: never;
         post?: never;
         delete?: never;
@@ -14810,220 +811,7 @@ export interface paths {
             cookie?: never;
         };
         /** List cloud live-session summaries */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listLiveTrackingSessions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -15040,449 +828,10 @@ export interface paths {
             cookie?: never;
         };
         /** List bulk data export jobs */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["listDataExports"];
         put?: never;
         /** Queue a 24-hour bulk ZIP export */
-        post: {
-            parameters: {
-                query?: never;
-                header: {
-                    "idempotency-key": string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        activityIds?: string[];
-                        /** Format: date-time */
-                        from?: string;
-                        /** Format: date-time */
-                        to?: string;
-                        formats: ("fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic" | "json")[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        post: operations["createDataExport"];
         delete?: never;
         options?: never;
         head?: never;
@@ -15497,222 +846,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get bulk export status and manifest */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Successful response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["getDataExport"];
         put?: never;
         post?: never;
         delete?: never;
@@ -15729,222 +863,7 @@ export interface paths {
             cookie?: never;
         };
         /** Download a completed bulk ZIP export */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description File response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/zip": string;
-                    };
-                };
-                /** @description File response. */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/zip": string;
-                    };
-                };
-                /** @description File response. */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/zip": string;
-                    };
-                };
-                /** @description Validation or idempotency error. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Authentication failed. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Premium or Full access is required. */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Resource or raw data not found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Conflict. */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Revision conflict. */
-                412: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description The requested operation or export cannot be produced. */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An If-Match revision is required. */
-                428: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Rate limit exceeded. */
-                429: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description Internal API error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-                /** @description An integration provider operation failed. */
-                502: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                requestId: string;
-                                details?: unknown;
-                            };
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["downloadDataExport"];
         put?: never;
         post?: never;
         delete?: never;
@@ -15961,7 +880,25 @@ export interface components {
         ActivityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
         /** @enum {string} */
         AccessMode: "read" | "full";
-        WorkoutPart: Record<string, never>;
+        WorkoutPart: {
+            title?: string;
+            layout?: string;
+            layouts?: string[];
+            layoutValues?: string[];
+            /** @enum {string} */
+            goalType?: "duration" | "distance" | "distanceSmall";
+            goalTypeVariation?: number;
+            goalValue?: number;
+            goalIsVariable?: boolean;
+            /** @enum {string} */
+            targetType?: "pace" | "paceSplits" | "speed" | "bpm" | "bpmZone" | "power" | "powerPercentage" | "rpe";
+            targetMin?: number;
+            targetMax?: number;
+            referenceRoute?: string;
+            hillEffort?: number;
+            repeats?: number;
+            repeatParts?: components["schemas"]["WorkoutPart"][];
+        };
         StructuredWorkoutInput: {
             title: string;
             /** @enum {string} */
@@ -15982,8 +919,6 @@ export interface components {
             date: string | null;
             /** Format: date-time */
             completedAt?: string | null;
-            /** @default null */
-            external: string | null;
             notes?: string | null;
         };
         StructuredWorkoutPatch: {
@@ -16006,8 +941,6 @@ export interface components {
             date: string | null;
             /** Format: date-time */
             completedAt?: string | null;
-            /** @default null */
-            external: string | null;
             notes?: string | null;
         };
         StructuredWorkoutBatch: {
@@ -16038,8 +971,6 @@ export interface components {
                     date: string | null;
                     /** Format: date-time */
                     completedAt?: string | null;
-                    /** @default null */
-                    external: string | null;
                     notes?: string | null;
                 };
             } | {
@@ -16068,8 +999,6 @@ export interface components {
                     date: string | null;
                     /** Format: date-time */
                     completedAt?: string | null;
-                    /** @default null */
-                    external: string | null;
                     notes?: string | null;
                 };
             } | {
@@ -16240,11 +1169,387 @@ export interface components {
         };
         Error: {
             error: {
-                code: string;
+                /** @enum {string} */
+                code: "authentication_required" | "invalid_token" | "authorization_code_invalid" | "refresh_token_invalid" | "premium_required" | "read_only_session" | "validation_failed" | "not_found" | "conflict" | "idempotency_key_required" | "idempotency_key_reused" | "revision_required" | "revision_conflict" | "rate_limit_exceeded" | "raw_data_unavailable" | "export_format_unavailable" | "internal_error";
                 message: string;
                 requestId: string;
-                details?: unknown;
+                details?: {
+                    path: string;
+                    message: string;
+                }[];
             };
+        };
+        TokenResponse: {
+            /** @enum {string} */
+            tokenType: "Bearer";
+            accessToken: string;
+            /** Format: date-time */
+            accessTokenExpiresAt: string;
+            refreshToken: string;
+            /** Format: date-time */
+            refreshTokenExpiresAt: string;
+            /** @enum {string} */
+            accessMode: "read" | "full";
+        };
+        ApiSession: {
+            id: string;
+            name: string;
+            /** @enum {string} */
+            clientId?: "watchletic-cli";
+            /** @enum {string} */
+            accessMode: "read" | "full";
+            /** Format: date-time */
+            accessTokenExpiresAt?: string;
+            /** Format: date-time */
+            refreshTokenExpiresAt: string;
+            /** Format: date-time */
+            lastUsedAt?: string | null;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            /** Format: date-time */
+            revokedAt?: string | null;
+        };
+        Settings: {
+            isMetric?: boolean | null;
+            isTemperatureCelsius?: boolean | null;
+            maxHeartRate?: number | null;
+            isHRZonesPercentage?: boolean | null;
+            amountHRZones?: 2 | 3 | 4 | 5 | 6 | 7 | null;
+            heartRateZone1?: number | null;
+            heartRateZone2?: number | null;
+            heartRateZone3?: number | null;
+            heartRateZone4?: number | null;
+            heartRateZone5?: number | null;
+            heartRateZone6?: number | null;
+            heartRateZone7?: number | null;
+            forceGpsForSpeed?: boolean | null;
+            gpsKalmanSmoothingEnabled?: boolean | null;
+            isSpeechEnabled?: boolean | null;
+            isSpeechMale?: boolean | null;
+            announceGoalEveryInterval?: boolean | null;
+            announceTargetEveryInterval?: boolean | null;
+            announcePaceEveryKmMi?: boolean | null;
+            announceBpmEveryKmMi?: boolean | null;
+            announcePowerEveryKmMi?: boolean | null;
+            announcePreviousBpmEveryInterval?: boolean | null;
+            announcePreviousPaceEveryInterval?: boolean | null;
+            announcePreviousPowerEveryInterval?: boolean | null;
+            nextIntervalMessageDurationMillis?: number | null;
+            announceHalfwayToGoal?: boolean | null;
+            announcePacingStrategySplits?: boolean | null;
+            outsideTargetAnnounceOnceAfterSeconds?: number | null;
+            outsideTargetAnnounceReminderEverySeconds?: number | null;
+            outsideTargetAnnounceInRangeOnceAfterSeconds?: number | null;
+            outsideTargetAnnounceInRangeEverySeconds?: number | null;
+            outsideTargetAnnounceDirection?: 0 | 1 | 2 | null;
+            useLegacyPaceTargetAnnouncements?: boolean | null;
+            showOutsideTargetMessage?: boolean | null;
+            showOutsideTargetDiff?: boolean | null;
+            showCountdownBeforeNextInterval?: boolean | null;
+            alwaysTriggerNextLapManually?: boolean | null;
+            showCircularNextLapButton?: boolean | null;
+            wearOSKeepScreenOn?: boolean | null;
+            autoLockOnWorkoutStart?: boolean | null;
+            pushToAppleWorkout?: boolean | null;
+            /** @enum {string|null} */
+            appleWorkoutAlertMetric?: "current" | "average" | null;
+            preferIntervalAsTarget?: boolean | null;
+            intervalCountInRepeatOnly?: boolean | null;
+            autoPauseEnabled?: boolean | null;
+            ultraActionButtonAction?: 0 | 1 | 2 | null;
+            crownSideButtonAction?: 0 | 1 | null;
+            runningPowerCP?: number | null;
+            strydCalibrationFactor?: number | null;
+            onlyExportRunningPowerIfStryd?: boolean | null;
+            useEngoColorGrid?: boolean | null;
+            engoBrightness?: "auto" | string | null;
+            /** @enum {string|null} */
+            weekStartsOn?: "monday" | "sunday" | "rolling" | null;
+            playSpeechOnPhoneIfAvailable?: boolean | null;
+            pauseAppleWatchSpokenAudioDuringAnnouncements?: boolean | null;
+            addToImportedSinglePaceRange?: number | null;
+            addToImportedSingleSpeedRange?: number | null;
+            addToImportedSingleBPMRange?: number | null;
+            addToImportedSinglePowerRange?: number | null;
+            liveTrackingEnabled?: boolean | null;
+            liveTrackingDisplayName?: string | null;
+            liveTrackingRecipients?: {
+                id: string;
+                /** Format: email */
+                email: string;
+                label?: string | null;
+                enabled?: boolean | null;
+            }[] | null;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        StructuredWorkout: {
+            title: string;
+            /** @enum {string} */
+            activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+            /**
+             * @default unknown
+             * @enum {string}
+             */
+            locationType: "unknown" | "indoor" | "outdoor";
+            /** @default true */
+            isMetric: boolean;
+            /** @default false */
+            isRecurring: boolean;
+            parts: components["schemas"]["WorkoutPart"][];
+            /** @default null */
+            recurringUntil: string | null;
+            /** @default null */
+            date: string | null;
+            /** Format: date-time */
+            completedAt: string | null;
+            notes: string | null;
+            id: string;
+            /** @description Sanitized integration origin. Clients cannot set or change this field. */
+            readonly external: string | null;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        DeletedResource: {
+            data: {
+                id: string;
+                /** Format: date-time */
+                deletedAt: string;
+                /**
+                 * Format: date-time
+                 * @description Opaque optimistic-concurrency revision for If-Match.
+                 */
+                readonly revision: string;
+            };
+        };
+        Activity: {
+            id: string;
+            title: string | null;
+            /** @enum {string} */
+            activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+            /** Format: date-time */
+            date: string;
+            /** Format: date-time */
+            endDate: string;
+            distanceMeters: number | null;
+            durationSeconds: number | null;
+            isIndoor: boolean;
+            hasLocations: boolean | null;
+            analyticsExcluded: boolean;
+            sourceApp: string | null;
+            trainingLoad: number | null;
+            runningPowerCP: number | null;
+            runningPowerRSS: number | null;
+            bluetoothDevices?: Record<string, never> | null;
+            config?: Record<string, never> | null;
+            uploadedId?: string | null;
+            rawDataAvailable?: boolean;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        Route: {
+            id: string;
+            name: string;
+            distanceMeters: number;
+            latitudes: number[];
+            longitudes: number[];
+            elevations: number[];
+            minHillElevationDiff: number | null;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        Layout: {
+            id: string;
+            title?: string | null;
+            /** @enum {string|null} */
+            activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing" | null;
+            /** @enum {string|null} */
+            locationType?: "unknown" | "indoor" | "outdoor" | null;
+            connectedDevices?: string[] | null;
+            goalType?: string | null;
+            targetType?: string | null;
+            stepName?: string | null;
+            layouts: string[];
+            values: string[];
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        Device: {
+            deviceId: string;
+            name: string;
+            /** @enum {string|null} */
+            type?: "activeLook" | "heartRateMonitor" | "treadmill" | "cyclingPowerMeter" | "stryd" | "coreBodyTemperature" | null;
+            /** @default [] */
+            activities: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+            capabilities?: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[] | null;
+            reportedFeatures?: ("rrIntervals" | "energyExpended" | "sensorContact" | "bodySensorLocation")[] | null;
+            enabledSignalsByActivity?: {
+                [key: string]: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[];
+            } | null;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        Readiness: {
+            id: string;
+            date: string;
+            hrvMs?: number | null;
+            /** @enum {string|null} */
+            hrvType?: "sdnn" | "rmssd" | null;
+            restingHrBpm?: number | null;
+            sleepSeconds?: number | null;
+            /** Format: date-time */
+            createdAt: string | null;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        FitnessResponse: {
+            /** @enum {string} */
+            scope: "all" | "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+            /** @enum {string} */
+            range: "90d" | "6m" | "1y" | "all";
+            anchorDate: string;
+            firstScoredDate?: string;
+            availableActivityTypes: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+            fitnessDays: number;
+            fatigueDays: number;
+            summary?: {
+                date: string;
+                trainingLoad: number;
+                fitness: number;
+                fatigue: number;
+                form: number;
+                fitnessHistoryDays?: number;
+                rampRate7Days?: number;
+            };
+            points: {
+                date: string;
+                trainingLoad: number;
+                fitness: number;
+                fatigue: number;
+                form: number;
+                fitnessHistoryDays?: number;
+                rampRate7Days?: number;
+                workouts?: {
+                    historyItemId: string;
+                    workoutName?: string;
+                    /** @enum {string} */
+                    activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                    trainingLoad: number;
+                }[];
+            }[];
+            processing: boolean;
+        };
+        Integration: {
+            id: string;
+            name: string;
+            connected: boolean;
+            /** Format: date-time */
+            lastImportedAt: string | null;
+            options: {
+                [key: string]: boolean | number | string;
+            } | null;
+            grantedScopes: string[];
+            /** Format: date-time */
+            pendingReconnectUntil: string | null;
+            /** Format: date-time */
+            readonly updatedAt: string | null;
+            /** Format: date-time */
+            readonly revision: string | null;
+            capabilities: {
+                canImport: boolean;
+                canExport: boolean;
+                optionDefinitions: Record<string, never>[];
+                supportedActivityTypes: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+            };
+        };
+        LiveSession: {
+            id: string;
+            status: string;
+            source: string;
+            title: string | null;
+            activityType: string;
+            locationType: string | null;
+            isMetric: boolean | null;
+            /** Format: date-time */
+            startedAt: string;
+            /** Format: date-time */
+            endedAt: string | null;
+            /** Format: date-time */
+            lastUpdateReceivedAt: string | null;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision: string;
+        };
+        DataExport: {
+            id: string;
+            /** @enum {string} */
+            status: "queued" | "processing" | "completed" | "failed";
+            request?: {
+                activityIds?: string[];
+                /** Format: date-time */
+                from?: string;
+                /** Format: date-time */
+                to?: string;
+                formats: ("fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic" | "json")[];
+            };
+            manifest?: Record<string, never> | null;
+            errorMessage?: string | null;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            /** Format: date-time */
+            expiresAt: string;
+            /**
+             * Format: date-time
+             * @description Opaque optimistic-concurrency revision for If-Match.
+             */
+            readonly revision?: string;
         };
     };
     responses: never;
@@ -16254,4 +1559,9062 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    authorizeCli: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    clientId: "watchletic-cli";
+                    /** Format: uri */
+                    redirectUri: string;
+                    codeChallenge: string;
+                    /** @enum {string} */
+                    codeChallengeMethod: "S256";
+                    /**
+                     * @default read
+                     * @enum {string}
+                     */
+                    accessMode?: "read" | "full";
+                    sessionName: string;
+                    state?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uri */
+                        redirectUrl: string;
+                        /** Format: date-time */
+                        expiresAt: string;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    exchangeOrRefreshToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    grantType: "authorization_code";
+                    /** @enum {string} */
+                    clientId: "watchletic-cli";
+                    code: string;
+                    /** Format: uri */
+                    redirectUri: string;
+                    codeVerifier: string;
+                } | {
+                    /** @enum {string} */
+                    grantType: "refresh_token";
+                    /** @enum {string} */
+                    clientId: "watchletic-cli";
+                    refreshToken: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Refresh token rotated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenResponse"];
+                };
+            };
+            /** @description Authorization code exchanged. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenResponse"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listApiSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        sessions: components["schemas"]["ApiSession"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    revokeApiSession: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Session revoked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    revokeCurrentApiSession: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    refreshToken?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Session revoked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            premium: {
+                                isPremium: boolean;
+                                /** Format: date-time */
+                                expiresAt: string | null;
+                            };
+                            apiSession: components["schemas"]["ApiSession"];
+                            capabilities: {
+                                dataAccess: boolean;
+                                mutations: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getCatalog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @enum {string} */
+                            apiVersion: "v1";
+                            /** @enum {string} */
+                            units: "SI";
+                            activityTypes: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+                            locationTypes: ("unknown" | "indoor" | "outdoor")[];
+                            structuredWorkoutGoalTypes: ("duration" | "distance" | "distanceSmall")[];
+                            structuredWorkoutTargetTypes: string[];
+                            activityExportFormats: ("fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic")[];
+                            rawFormats: ("watchletic" | "json" | "ndjson" | "csv")[];
+                            rawChannelUnits: {
+                                [key: string]: string;
+                            };
+                            readinessHrvTypes: ("sdnn" | "rmssd")[];
+                            accessModes: ("read" | "full")[];
+                            logicalDeviceTypes: string[];
+                            logicalDeviceCapabilities: string[];
+                            integrations: Record<string, never>[];
+                            deviceLocalOnly: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Settings"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateSettings: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    isMetric?: boolean | null;
+                    isTemperatureCelsius?: boolean | null;
+                    maxHeartRate?: number | null;
+                    isHRZonesPercentage?: boolean | null;
+                    amountHRZones?: 2 | 3 | 4 | 5 | 6 | 7 | null;
+                    heartRateZone1?: number | null;
+                    heartRateZone2?: number | null;
+                    heartRateZone3?: number | null;
+                    heartRateZone4?: number | null;
+                    heartRateZone5?: number | null;
+                    heartRateZone6?: number | null;
+                    heartRateZone7?: number | null;
+                    forceGpsForSpeed?: boolean | null;
+                    gpsKalmanSmoothingEnabled?: boolean | null;
+                    isSpeechEnabled?: boolean | null;
+                    isSpeechMale?: boolean | null;
+                    announceGoalEveryInterval?: boolean | null;
+                    announceTargetEveryInterval?: boolean | null;
+                    announcePaceEveryKmMi?: boolean | null;
+                    announceBpmEveryKmMi?: boolean | null;
+                    announcePowerEveryKmMi?: boolean | null;
+                    announcePreviousBpmEveryInterval?: boolean | null;
+                    announcePreviousPaceEveryInterval?: boolean | null;
+                    announcePreviousPowerEveryInterval?: boolean | null;
+                    nextIntervalMessageDurationMillis?: number | null;
+                    announceHalfwayToGoal?: boolean | null;
+                    announcePacingStrategySplits?: boolean | null;
+                    outsideTargetAnnounceOnceAfterSeconds?: number | null;
+                    outsideTargetAnnounceReminderEverySeconds?: number | null;
+                    outsideTargetAnnounceInRangeOnceAfterSeconds?: number | null;
+                    outsideTargetAnnounceInRangeEverySeconds?: number | null;
+                    outsideTargetAnnounceDirection?: 0 | 1 | 2 | null;
+                    useLegacyPaceTargetAnnouncements?: boolean | null;
+                    showOutsideTargetMessage?: boolean | null;
+                    showOutsideTargetDiff?: boolean | null;
+                    showCountdownBeforeNextInterval?: boolean | null;
+                    alwaysTriggerNextLapManually?: boolean | null;
+                    showCircularNextLapButton?: boolean | null;
+                    wearOSKeepScreenOn?: boolean | null;
+                    autoLockOnWorkoutStart?: boolean | null;
+                    pushToAppleWorkout?: boolean | null;
+                    /** @enum {string|null} */
+                    appleWorkoutAlertMetric?: "current" | "average" | null;
+                    preferIntervalAsTarget?: boolean | null;
+                    intervalCountInRepeatOnly?: boolean | null;
+                    autoPauseEnabled?: boolean | null;
+                    ultraActionButtonAction?: 0 | 1 | 2 | null;
+                    crownSideButtonAction?: 0 | 1 | null;
+                    runningPowerCP?: number | null;
+                    strydCalibrationFactor?: number | null;
+                    onlyExportRunningPowerIfStryd?: boolean | null;
+                    useEngoColorGrid?: boolean | null;
+                    engoBrightness?: "auto" | string | null;
+                    /** @enum {string|null} */
+                    weekStartsOn?: "monday" | "sunday" | "rolling" | null;
+                    playSpeechOnPhoneIfAvailable?: boolean | null;
+                    pauseAppleWatchSpokenAudioDuringAnnouncements?: boolean | null;
+                    addToImportedSinglePaceRange?: number | null;
+                    addToImportedSingleSpeedRange?: number | null;
+                    addToImportedSingleBPMRange?: number | null;
+                    addToImportedSinglePowerRange?: number | null;
+                    liveTrackingEnabled?: boolean | null;
+                    liveTrackingDisplayName?: string | null;
+                    liveTrackingRecipients?: {
+                        id: string;
+                        /** Format: email */
+                        email: string;
+                        label?: string | null;
+                        enabled?: boolean | null;
+                    }[] | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Settings"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listStructuredWorkouts: {
+        parameters: {
+            query?: {
+                from?: string;
+                to?: string;
+                scheduled?: boolean;
+                limit?: number;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"][];
+                        nextCursor: string | null;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createStructuredWorkout: {
+        parameters: {
+            query?: {
+                from?: string;
+                to?: string;
+                scheduled?: boolean;
+                limit?: number;
+                cursor?: string;
+            };
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title: string;
+                    /** @enum {string} */
+                    activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                    /**
+                     * @default unknown
+                     * @enum {string}
+                     */
+                    locationType?: "unknown" | "indoor" | "outdoor";
+                    /** @default true */
+                    isMetric?: boolean;
+                    /** @default false */
+                    isRecurring?: boolean;
+                    parts: components["schemas"]["WorkoutPart"][];
+                    /** @default null */
+                    recurringUntil?: string | null;
+                    /** @default null */
+                    date?: string | null;
+                    /** Format: date-time */
+                    completedAt?: string | null;
+                    notes?: string | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getStructuredWorkout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteStructuredWorkout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletedResource"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateStructuredWorkout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string;
+                    /** @enum {string} */
+                    activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                    /**
+                     * @default unknown
+                     * @enum {string}
+                     */
+                    locationType?: "unknown" | "indoor" | "outdoor";
+                    /** @default true */
+                    isMetric?: boolean;
+                    /** @default false */
+                    isRecurring?: boolean;
+                    parts?: components["schemas"]["WorkoutPart"][];
+                    /** @default null */
+                    recurringUntil?: string | null;
+                    /** @default null */
+                    date?: string | null;
+                    /** Format: date-time */
+                    completedAt?: string | null;
+                    notes?: string | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    cloneStructuredWorkout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string;
+                    date?: string | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    exportStructuredWorkoutShareCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        code: string;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    importStructuredWorkoutShareCode: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    validateStructuredWorkoutBatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    operations: ({
+                        /** @enum {string} */
+                        action: "create";
+                        /** Format: uuid */
+                        id?: string;
+                        workout: {
+                            title: string;
+                            /** @enum {string} */
+                            activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                            /**
+                             * @default unknown
+                             * @enum {string}
+                             */
+                            locationType?: "unknown" | "indoor" | "outdoor";
+                            /** @default true */
+                            isMetric?: boolean;
+                            /** @default false */
+                            isRecurring?: boolean;
+                            parts: components["schemas"]["WorkoutPart"][];
+                            /** @default null */
+                            recurringUntil?: string | null;
+                            /** @default null */
+                            date?: string | null;
+                            /** Format: date-time */
+                            completedAt?: string | null;
+                            notes?: string | null;
+                        };
+                    } | {
+                        /** @enum {string} */
+                        action: "update";
+                        id: string;
+                        /** Format: date-time */
+                        expectedRevision: string;
+                        workout: {
+                            title?: string;
+                            /** @enum {string} */
+                            activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                            /**
+                             * @default unknown
+                             * @enum {string}
+                             */
+                            locationType?: "unknown" | "indoor" | "outdoor";
+                            /** @default true */
+                            isMetric?: boolean;
+                            /** @default false */
+                            isRecurring?: boolean;
+                            parts?: components["schemas"]["WorkoutPart"][];
+                            /** @default null */
+                            recurringUntil?: string | null;
+                            /** @default null */
+                            date?: string | null;
+                            /** Format: date-time */
+                            completedAt?: string | null;
+                            notes?: string | null;
+                        };
+                    } | {
+                        /** @enum {string} */
+                        action: "delete";
+                        id: string;
+                        /** Format: date-time */
+                        expectedRevision: string;
+                    })[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        valid: true;
+                        validationId: string;
+                        operations: ({
+                            /** @enum {string} */
+                            action: "create";
+                            /** Format: uuid */
+                            id?: string;
+                            workout: {
+                                title: string;
+                                /** @enum {string} */
+                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                /**
+                                 * @default unknown
+                                 * @enum {string}
+                                 */
+                                locationType: "unknown" | "indoor" | "outdoor";
+                                /** @default true */
+                                isMetric: boolean;
+                                /** @default false */
+                                isRecurring: boolean;
+                                parts: components["schemas"]["WorkoutPart"][];
+                                /** @default null */
+                                recurringUntil: string | null;
+                                /** @default null */
+                                date: string | null;
+                                /** Format: date-time */
+                                completedAt?: string | null;
+                                notes?: string | null;
+                            };
+                        } | {
+                            /** @enum {string} */
+                            action: "update";
+                            id: string;
+                            /** Format: date-time */
+                            expectedRevision: string;
+                            workout: {
+                                title?: string;
+                                /** @enum {string} */
+                                activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                /**
+                                 * @default unknown
+                                 * @enum {string}
+                                 */
+                                locationType: "unknown" | "indoor" | "outdoor";
+                                /** @default true */
+                                isMetric: boolean;
+                                /** @default false */
+                                isRecurring: boolean;
+                                parts?: components["schemas"]["WorkoutPart"][];
+                                /** @default null */
+                                recurringUntil: string | null;
+                                /** @default null */
+                                date: string | null;
+                                /** Format: date-time */
+                                completedAt?: string | null;
+                                notes?: string | null;
+                            };
+                        } | {
+                            /** @enum {string} */
+                            action: "delete";
+                            id: string;
+                            /** Format: date-time */
+                            expectedRevision: string;
+                        })[];
+                        diff: {
+                            /** @enum {string} */
+                            action: "create" | "update" | "delete";
+                            id: string;
+                            before: {
+                                title: string;
+                                date: string | null;
+                                /** @enum {string} */
+                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                isRecurring: boolean;
+                                recurringUntil: string | null;
+                            } | null;
+                            after: {
+                                title: string;
+                                date: string | null;
+                                /** @enum {string} */
+                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                isRecurring: boolean;
+                                recurringUntil: string | null;
+                            } | null;
+                        }[];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    applyStructuredWorkoutBatch: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    validationId?: string;
+                    operations: ({
+                        /** @enum {string} */
+                        action: "create";
+                        /** Format: uuid */
+                        id?: string;
+                        workout: {
+                            title: string;
+                            /** @enum {string} */
+                            activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                            /**
+                             * @default unknown
+                             * @enum {string}
+                             */
+                            locationType?: "unknown" | "indoor" | "outdoor";
+                            /** @default true */
+                            isMetric?: boolean;
+                            /** @default false */
+                            isRecurring?: boolean;
+                            parts: components["schemas"]["WorkoutPart"][];
+                            /** @default null */
+                            recurringUntil?: string | null;
+                            /** @default null */
+                            date?: string | null;
+                            /** Format: date-time */
+                            completedAt?: string | null;
+                            notes?: string | null;
+                        };
+                    } | {
+                        /** @enum {string} */
+                        action: "update";
+                        id: string;
+                        /** Format: date-time */
+                        expectedRevision: string;
+                        workout: {
+                            title?: string;
+                            /** @enum {string} */
+                            activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                            /**
+                             * @default unknown
+                             * @enum {string}
+                             */
+                            locationType?: "unknown" | "indoor" | "outdoor";
+                            /** @default true */
+                            isMetric?: boolean;
+                            /** @default false */
+                            isRecurring?: boolean;
+                            parts?: components["schemas"]["WorkoutPart"][];
+                            /** @default null */
+                            recurringUntil?: string | null;
+                            /** @default null */
+                            date?: string | null;
+                            /** Format: date-time */
+                            completedAt?: string | null;
+                            notes?: string | null;
+                        };
+                    } | {
+                        /** @enum {string} */
+                        action: "delete";
+                        id: string;
+                        /** Format: date-time */
+                        expectedRevision: string;
+                    })[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StructuredWorkout"][];
+                        diff: {
+                            /** @enum {string} */
+                            action: "create" | "update" | "delete";
+                            id: string;
+                            before: {
+                                title: string;
+                                date: string | null;
+                                /** @enum {string} */
+                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                isRecurring: boolean;
+                                recurringUntil: string | null;
+                            } | null;
+                            after: {
+                                title: string;
+                                date: string | null;
+                                /** @enum {string} */
+                                activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                                isRecurring: boolean;
+                                recurringUntil: string | null;
+                            } | null;
+                        }[];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listActivities: {
+        parameters: {
+            query?: {
+                from?: string;
+                to?: string;
+                activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                limit?: number;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Activity"][];
+                        nextCursor: string | null;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getActivity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Activity"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteActivity: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletedResource"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateActivity: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string | null;
+                    analyticsExcluded?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Activity"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getActivityRawData: {
+        parameters: {
+            query?: {
+                format?: "watchletic" | "json" | "ndjson" | "csv";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                    "application/json": string;
+                    "application/x-ndjson": string;
+                    "text/csv": string;
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    exportActivity: {
+        parameters: {
+            query: {
+                format: "fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                    "application/gpx+xml": string;
+                    "application/vnd.garmin.tcx+xml": string;
+                    "text/csv": string;
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listRoutes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Route"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createRoute: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    distanceMeters: number;
+                    latitudes: number[];
+                    longitudes: number[];
+                    elevations: number[];
+                    minHillElevationDiff?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Route"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Route"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteRoute: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletedResource"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateRoute: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    distanceMeters?: number;
+                    latitudes?: number[];
+                    longitudes?: number[];
+                    elevations?: number[];
+                    minHillElevationDiff?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Route"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listLayouts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Layout"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createLayout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string | null;
+                    /** @enum {string|null} */
+                    activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing" | null;
+                    /** @enum {string|null} */
+                    locationType?: "unknown" | "indoor" | "outdoor" | null;
+                    connectedDevices?: string[] | null;
+                    goalType?: string | null;
+                    targetType?: string | null;
+                    stepName?: string | null;
+                    layouts: string[];
+                    values: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Layout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getLayout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Layout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteLayout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletedResource"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateLayout: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    title?: string | null;
+                    /** @enum {string|null} */
+                    activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing" | null;
+                    /** @enum {string|null} */
+                    locationType?: "unknown" | "indoor" | "outdoor" | null;
+                    connectedDevices?: string[] | null;
+                    goalType?: string | null;
+                    targetType?: string | null;
+                    stepName?: string | null;
+                    layouts?: string[];
+                    values?: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Layout"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listDevices: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Device"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createDevice: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    deviceId?: string;
+                    name: string;
+                    /** @enum {string|null} */
+                    type?: "activeLook" | "heartRateMonitor" | "treadmill" | "cyclingPowerMeter" | "stryd" | "coreBodyTemperature" | null;
+                    /** @default [] */
+                    activities?: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+                    capabilities?: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[] | null;
+                    reportedFeatures?: ("rrIntervals" | "energyExpended" | "sensorContact" | "bodySensorLocation")[] | null;
+                    enabledSignalsByActivity?: {
+                        [key: string]: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[];
+                    } | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Device"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getDevice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Device"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteDevice: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletedResource"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateDevice: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    /** @enum {string|null} */
+                    type?: "activeLook" | "heartRateMonitor" | "treadmill" | "cyclingPowerMeter" | "stryd" | "coreBodyTemperature" | null;
+                    activities?: ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing")[];
+                    capabilities?: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[] | null;
+                    reportedFeatures?: ("rrIntervals" | "energyExpended" | "sensorContact" | "bodySensorLocation")[] | null;
+                    enabledSignalsByActivity?: {
+                        [key: string]: ("display" | "heartRate" | "runningSpeedAndCadence" | "runningDistance" | "runningPower" | "runningDynamics" | "cyclingPower" | "cyclingSpeedAndCadence" | "bodyTemperature" | "treadmillControl")[];
+                    } | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Device"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    importRouteGpx: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    gpx: string;
+                    name?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Route"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    exportRouteGpx: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/gpx+xml": string;
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listReadiness: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Readiness"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createReadiness: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    date: string;
+                    hrvMs?: number | null;
+                    /** @enum {string|null} */
+                    hrvType?: "sdnn" | "rmssd" | null;
+                    restingHrBpm?: number | null;
+                    sleepSeconds?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Readiness"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    deleteReadiness: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            /** @enum {boolean} */
+                            deleted: true;
+                        };
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateReadiness: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    date?: string;
+                    hrvMs?: number | null;
+                    /** @enum {string|null} */
+                    hrvType?: "sdnn" | "rmssd" | null;
+                    restingHrBpm?: number | null;
+                    sleepSeconds?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Readiness"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>[];
+                        processing: boolean;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getFitnessAnalytics: {
+        parameters: {
+            query?: {
+                scope?: "all" | "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                range?: "90d" | "6m" | "1y" | "all";
+                anchorDate?: string;
+                timeZone?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FitnessResponse"];
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    rebuildAnalytics: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    activityType?: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {boolean} */
+                        queued: true;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getTrainingLoad: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    initializeTrainingLoad: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    initializationKind: "existingAccount" | "newAccount";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateTrainingLoadReference: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    scope: "global" | ("running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing");
+                    /** @enum {string} */
+                    referenceKey: "strydCriticalPower" | "watchCriticalPower" | "cyclingFtp" | "thresholdPace" | "thresholdHeartRate" | "maxHeartRate" | "restingHeartRate";
+                    useAutomatic?: boolean;
+                    manualValue?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateTrainingLoadSport: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                activityType: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    sourcePriority: ("strydPower" | "watchPower" | "cyclingPower" | "pace" | "heartRate")[];
+                    enabledSources: ("strydPower" | "watchPower" | "cyclingPower" | "pace" | "heartRate")[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getActivityTrainingLoad: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    recalculateActivityTrainingLoad: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    selectActivityTrainingLoadSource: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string|null} */
+                    source: "strydPower" | "watchPower" | "cyclingPower" | "pace" | "heartRate" | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listIntegrations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Integration"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    connectIntegration: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uri */
+                        authorizeUrl: string;
+                        /** @enum {boolean} */
+                        hosted: true;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    updateIntegrationOptions: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: boolean | number | string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    importIntegrationWorkouts: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    exportActivityToIntegration: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path: {
+                id: string;
+                activityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    disconnectIntegration: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+                "if-match": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            /** Format: date-time */
+                            disconnectedAt: string;
+                            providerRevoked: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getLiveTrackingSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            liveTrackingEnabled: boolean | null;
+                            liveTrackingDisplayName: string | null;
+                            liveTrackingRecipients: Record<string, never>[] | null;
+                            /** Format: date-time */
+                            readonly updatedAt: string;
+                            /**
+                             * Format: date-time
+                             * @description Opaque optimistic-concurrency revision for If-Match.
+                             */
+                            readonly revision: string;
+                        } | null;
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listLiveTrackingSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["LiveSession"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    listDataExports: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["DataExport"][];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    createDataExport: {
+        parameters: {
+            query?: never;
+            header: {
+                "idempotency-key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    activityIds?: string[];
+                    /** Format: date-time */
+                    from?: string;
+                    /** Format: date-time */
+                    to?: string;
+                    formats: ("fit" | "gpx" | "tcx" | "alpha1Csv" | "watchletic" | "json")[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["DataExport"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    getDataExport: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["DataExport"];
+                    };
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    downloadDataExport: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/zip": string;
+                };
+            };
+            /** @description Validation or idempotency error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Authentication failed. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Premium or Full access is required. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Resource or raw data not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Revision conflict. */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description The requested operation or export cannot be produced. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An If-Match revision is required. */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Rate limit exceeded. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Internal API error. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An integration provider operation failed. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+}

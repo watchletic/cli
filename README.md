@@ -2,7 +2,7 @@
 
 The official Node 20+ command-line client for Watchletic's Premium-only Data API. It reads and changes remotely meaningful Watchletic cloud data, exports activities, and gives AI agents a bounded deterministic context without exposing provider credentials.
 
-This repository is prepared locally as the future `@watchletic/cli` package. It has no Git remote and is not published yet.
+The canonical repository will be [watchletic/cli](https://github.com/watchletic/cli), and the npm package will be `@watchletic/cli`. This local checkout is not connected to a remote or published yet.
 
 ## Local development
 
@@ -15,6 +15,8 @@ node dist/index.js --help
 ```
 
 The generator reads `../watchletic-api/openapi/watchletic-v1.yaml`. Generated types are committed, so package installation will not depend on a sibling repository.
+
+`npm pack` and package publication use the committed generated types and do not require the sibling API repository. Run `npm run generate` explicitly when updating the contract during local development.
 
 Use `WATCHLETIC_API_URL` to point at a local server and `WATCHLETIC_ACCESS_TOKEN` for an ephemeral access-token override. The environment token is never written to disk.
 
