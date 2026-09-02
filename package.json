@@ -1,0 +1,43 @@
+{
+  "name": "@watchletic/cli",
+  "version": "0.1.0",
+  "description": "Official CLI for the Watchletic Data API",
+  "type": "module",
+  "bin": {
+    "watchletic": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "generate": "openapi-typescript ../watchletic-api/openapi/watchletic-v1.yaml -o src/generated/schema.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepack": "npm run generate && npm run test && npm run typecheck && npm run build"
+  },
+  "keywords": [
+    "watchletic",
+    "fitness",
+    "workouts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "14.0.0",
+    "openapi-fetch": "0.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "openapi-typescript": "7.9.1",
+    "tsup": "8.5.0",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}
