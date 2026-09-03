@@ -20,6 +20,12 @@ The generator reads `../watchletic-api/openapi/watchletic-v1.yaml`. Generated ty
 
 Use `WATCHLETIC_API_URL` to point at a local server and `WATCHLETIC_ACCESS_TOKEN` for an ephemeral access-token override. The environment token is never written to disk.
 
+## Agent context
+
+`watchletic context` returns compact, deterministic JSON for training analysis and structured-workout planning. It includes recent activity metadata, readiness values and seven-day trends, summarized 90-day analytics, current fitness/fatigue/form, training-load configuration, and upcoming structured-workout summaries.
+
+Full analytics curves, raw samples, live-tracking recipients, and complete structured-workout steps are intentionally excluded. Use the returned activity and structured-workout IDs with the focused `activities get`, `activities raw`, `analytics get`, or `structured-workouts get` commands when a specific question needs more detail.
+
 ## Safety
 
 Every mutation prints its exact before/after value and asks for confirmation. Non-interactive mutations require `--yes`. Structured-workout batches are always validated and their schedule diff is displayed before commit.

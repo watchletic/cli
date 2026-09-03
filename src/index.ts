@@ -6,6 +6,7 @@ import { login, logout } from './auth.js'
 import { redactedStatus } from './config.js'
 import { CliError, ExitCode } from './errors.js'
 import { confirmMutation, output, readJson, writeDownload } from './io.js'
+import { buildAgentContext } from './context.js'
 
 const program = new Command()
 program.exitOverride()
@@ -558,7 +559,7 @@ program
   .command('context')
   .option('--from <date>')
   .option('--to <date>')
-  .option('--recent <n>', 'maximum recent activities', '30')
+  .option('--recent <n>', 'maximum recent activities', '25')
   .action(async (options) => {
     const timeZone = globalOptions().timezone
     const today = new Intl.DateTimeFormat('en-CA', { timeZone }).format(
@@ -566,23 +567,31 @@ program
     )
     const from = options.from ?? addDays(today, -42)
     const to = options.to ?? addDays(today, 14)
+    const recentLimit = Math.min(
+      Math.max(Math.trunc(Number(options.recent)) || 25, 1),
+      100,
+    )
     const [
       settingsValue,
       activitiesValue,
       readinessValue,
       analyticsValue,
       trainingValue,
+      fitnessValue,
       workoutsValue,
     ] = await Promise.all([
       apiRequest('/settings'),
       apiRequest(
-        `/activities${query({ from: `${from}T00:00:00Z`, to: `${today}T23:59:59Z`, limit: Math.min(Number(options.recent), 100) })}`,
+        `/activities${query({ from: `${from}T00:00:00Z`, to: `${today}T23:59:59Z`, limit: recentLimit })}`,
       ),
       apiRequest('/readiness'),
       apiRequest('/analytics'),
       apiRequest('/training-load'),
       apiRequest(
-        `/structured-workouts${query({ from: today, to, scheduled: true, limit: 100 })}`,
+        `/analytics/fitness${query({ scope: 'all', range: '90d', anchorDate: today, timeZone })}`,
+      ),
+      apiRequest(
+        `/structured-workouts${query({ from: today, to, scheduled: true, limit: 21 })}`,
       ),
     ])
     const analyticsResponse = analyticsValue as {
@@ -591,31 +600,26 @@ program
       processingStatus?: 'waiting' | 'processing' | 'ready'
     }
     show(
-      {
-        schemaVersion: 1,
+      buildAgentContext({
         generatedAt: new Date().toISOString(),
-        range: { from, to, timeZone },
+        from,
+        to,
+        timeZone,
+        requestedRecentActivities: recentLimit,
         settings: data(settingsValue),
-        recentActivities: (activitiesValue as any).data ?? [],
-        readiness: ((readinessValue as any).data ?? [])
-          .filter((entry: any) => entry.date >= from)
-          .slice(0, 60),
+        activities: (activitiesValue as any).data ?? [],
+        readiness: ((readinessValue as any).data ?? []).filter(
+          (entry: any) => entry.date >= from,
+        ),
         analytics: {
-          profiles: data(analyticsValue),
+          data: data(analyticsValue),
           processing: analyticsResponse.processing ?? false,
-          processingStatus:
-            analyticsResponse.processingStatus ??
-            (analyticsResponse.processing ? 'processing' : 'ready'),
+          processingStatus: analyticsResponse.processingStatus,
         },
         trainingLoad: data(trainingValue),
-        upcomingStructuredWorkouts: (workoutsValue as any).data ?? [],
-        completeness: {
-          rawSamplesIncluded: false,
-          cloudOnly: true,
-          analyticsProcessing: analyticsResponse.processing ?? false,
-          note: 'Request raw channels only for a specific analysis question.',
-        },
-      },
+        fitness: data(fitnessValue),
+        structuredWorkouts: (workoutsValue as any).data ?? [],
+      }),
       true,
     )
   })
