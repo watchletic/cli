@@ -11,7 +11,7 @@ const program = new Command()
 program.exitOverride()
 program
   .name('watchletic')
-  .description('Work with your Watchletic Premium data')
+  .description('Work with your Watchletic data')
   .version('0.1.0')
   .option('--json', 'emit stable JSON output')
   .option('--yes', 'confirm a mutation non-interactively')

@@ -1,6 +1,6 @@
 # Watchletic CLI
 
-The official Node 20+ command-line client for Watchletic's Premium-only Data API. It reads and changes remotely meaningful Watchletic cloud data, exports activities, and gives AI agents a bounded deterministic context without exposing provider credentials.
+The official Node 20+ command-line client for the Watchletic Data API. It reads and changes remotely meaningful Watchletic cloud data for Watchletic Club members, exports activities, and gives AI agents a bounded deterministic context without exposing provider credentials.
 
 The canonical repository will be [watchletic/cli](https://github.com/watchletic/cli), and the npm package will be `@watchletic/cli`. This local checkout is not connected to a remote or published yet.
 
@@ -29,7 +29,7 @@ Every mutation prints its exact before/after value and asks for confirmation. No
 - `0` success
 - `2` usage or validation failure
 - `3` authentication failure
-- `4` Watchletic Premium required
+- `4` Watchletic Club membership required for data access
 - `5` conflict or stale revision
 - `6` raw data or requested export unavailable
 - `7` partial bulk export

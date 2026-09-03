@@ -96,7 +96,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get identity, Premium state, and API access */
+        /** Get identity, Watchletic Club state, and API access */
         get: operations["getMe"];
         put?: never;
         post?: never;
@@ -1722,7 +1722,7 @@ export interface components {
                 "application/json": components["schemas"]["Error"];
             };
         };
-        /** @description Premium or Full access is required. */
+        /** @description Watchletic Club or Full access is required. */
         Forbidden: {
             headers: {
                 [name: string]: unknown;
@@ -2042,8 +2042,8 @@ export interface operations {
                     "application/json": {
                         data: {
                             id: string;
-                            premium: {
-                                isPremium: boolean;
+                            club: {
+                                isMember: boolean;
                                 /** Format: date-time */
                                 expiresAt: string | null;
                             };

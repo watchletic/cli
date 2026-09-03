@@ -68,6 +68,7 @@ export async function login(accessMode: 'read' | 'full', sessionName: string) {
   authorize.searchParams.set('state', state)
   authorize.searchParams.set('accessMode', accessMode)
   authorize.searchParams.set('sessionName', sessionName)
+  console.error(`Open this URL to authorize Watchletic CLI:\n${authorize}`)
   openBrowser(authorize.toString())
   const timeout = setTimeout(
     () =>
