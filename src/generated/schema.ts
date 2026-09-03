@@ -1356,7 +1356,6 @@ export interface components {
             runningPowerRSS: number | null;
             bluetoothDevices?: Record<string, never> | null;
             config?: Record<string, never> | null;
-            uploadedId?: string | null;
             rawDataAvailable?: boolean;
             /** Format: date-time */
             readonly updatedAt: string;
@@ -1441,6 +1440,156 @@ export interface components {
              */
             readonly revision: string;
         };
+        SportAnalyticsProfile: {
+            /** @enum {string} */
+            activityType: "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
+            windowDays: number;
+            asOfDate: string;
+            /** @enum {string} */
+            status: "processing" | "ready" | "failed";
+            analyzedWorkoutCount: number;
+            eligibleWorkoutCount: number;
+            distanceYears: {
+                year: number;
+                totalMeters: number;
+                points: {
+                    dayOfYear: number;
+                    cumulativeMeters: number;
+                }[];
+            }[];
+            metrics: {
+                /** @enum {string} */
+                metric: "power" | "pace" | "heartRate";
+                source: string;
+                curve: {
+                    durationSeconds: number;
+                    value: number;
+                    historyItemId: string;
+                    workoutName?: string;
+                    workoutDate: string;
+                    startOffsetSeconds: number;
+                }[];
+                estimates: {
+                    /** @enum {string} */
+                    type: "criticalPower" | "estimatedFtp" | "criticalPace" | "thresholdHeartRate";
+                    value: number;
+                    /** @enum {string} */
+                    unit: "w" | "mps" | "bpm";
+                    model: string;
+                    /** @enum {string} */
+                    confidence: "low" | "medium" | "high";
+                    confidenceScore: number;
+                    supportingPointCount: number;
+                    supportingPoints: {
+                        durationSeconds: number;
+                        value: number;
+                        historyItemId: string;
+                        workoutName?: string;
+                        workoutDate: string;
+                        startOffsetSeconds: number;
+                    }[];
+                    note?: string;
+                }[];
+                contributingWorkoutCount: number;
+            }[];
+            dfa?: {
+                contributingWorkoutCount: number;
+                goodQualityWorkoutCount: number;
+                maxHeartRateBpm?: number;
+                recentWorkouts: {
+                    historyItemId: string;
+                    workoutName?: string;
+                    workoutDate: string;
+                    /** @enum {string} */
+                    quality: "good" | "limited" | "poor" | "insufficient";
+                    /** @enum {string} */
+                    interpretation: "mostlyLowIntensity" | "mixed" | "mostlyAboveLowIntensity" | "mostlyHighIntensity" | "withheld";
+                    medianAlpha1: number;
+                    coverage: number;
+                    validWindowCount: number;
+                    measuredDurationSeconds: number;
+                    artifactP95Percentage?: number;
+                    averageHeartRateBpm?: number;
+                    averageHeartRatePercentMax?: number;
+                    averagePowerWatts?: number;
+                    averageSpeedMetersPerSecond?: number;
+                    bands: {
+                        /** @enum {string} */
+                        band: "lowIntensity" | "moderateIntensity" | "highIntensity";
+                        durationSeconds: number;
+                        fraction: number;
+                        averageHeartRateBpm?: number;
+                        averagePowerWatts?: number;
+                        averageSpeedMetersPerSecond?: number;
+                    }[];
+                    trend?: {
+                        earlyMedianAlpha1: number;
+                        lateMedianAlpha1: number;
+                        alpha1Change: number;
+                        comparableLoad: boolean;
+                        /** @enum {string} */
+                        comparisonMetric?: "heartRate" | "power";
+                        earlyLoad?: number;
+                        lateLoad?: number;
+                    };
+                }[];
+                lowHeartRateWorkouts: {
+                    historyItemId: string;
+                    workoutName?: string;
+                    workoutDate: string;
+                    /** @enum {string} */
+                    quality: "good" | "limited" | "poor" | "insufficient";
+                    /** @enum {string} */
+                    interpretation: "mostlyLowIntensity" | "mixed" | "mostlyAboveLowIntensity" | "mostlyHighIntensity" | "withheld";
+                    medianAlpha1: number;
+                    coverage: number;
+                    validWindowCount: number;
+                    measuredDurationSeconds: number;
+                    artifactP95Percentage?: number;
+                    averageHeartRateBpm?: number;
+                    averageHeartRatePercentMax?: number;
+                    averagePowerWatts?: number;
+                    averageSpeedMetersPerSecond?: number;
+                    bands: {
+                        /** @enum {string} */
+                        band: "lowIntensity" | "moderateIntensity" | "highIntensity";
+                        durationSeconds: number;
+                        fraction: number;
+                        averageHeartRateBpm?: number;
+                        averagePowerWatts?: number;
+                        averageSpeedMetersPerSecond?: number;
+                    }[];
+                    trend?: {
+                        earlyMedianAlpha1: number;
+                        lateMedianAlpha1: number;
+                        alpha1Change: number;
+                        comparableLoad: boolean;
+                        /** @enum {string} */
+                        comparisonMetric?: "heartRate" | "power";
+                        earlyLoad?: number;
+                        lateLoad?: number;
+                    };
+                }[];
+                aerobicThresholdEstimate?: {
+                    heartRateBpm: number;
+                    powerWatts?: number;
+                    speedMetersPerSecond?: number;
+                    /** @enum {string} */
+                    confidence: "low" | "medium" | "high";
+                    confidenceScore: number;
+                    sourceWorkouts: {
+                        historyItemId: string;
+                        workoutName?: string;
+                        workoutDate: string;
+                        heartRateBpm: number;
+                        powerWatts?: number;
+                        speedMetersPerSecond?: number;
+                    }[];
+                };
+            };
+            /** Format: date-time */
+            readonly updatedAt: string;
+        };
         FitnessResponse: {
             /** @enum {string} */
             scope: "all" | "running" | "cycling" | "swimming" | "walking" | "crossCountrySkiing";
@@ -1477,6 +1626,8 @@ export interface components {
                 }[];
             }[];
             processing: boolean;
+            /** @enum {string} */
+            processingStatus: "waiting" | "processing" | "ready";
         };
         Integration: {
             id: string;
@@ -3893,8 +4044,10 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        data: Record<string, never>[];
+                        data: components["schemas"]["SportAnalyticsProfile"][];
                         processing: boolean;
+                        /** @enum {string} */
+                        processingStatus: "waiting" | "processing" | "ready";
                     };
                 };
             };

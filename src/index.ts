@@ -585,6 +585,11 @@ program
         `/structured-workouts${query({ from: today, to, scheduled: true, limit: 100 })}`,
       ),
     ])
+    const analyticsResponse = analyticsValue as {
+      data?: unknown
+      processing?: boolean
+      processingStatus?: 'waiting' | 'processing' | 'ready'
+    }
     show(
       {
         schemaVersion: 1,
@@ -595,12 +600,19 @@ program
         readiness: ((readinessValue as any).data ?? [])
           .filter((entry: any) => entry.date >= from)
           .slice(0, 60),
-        analytics: data(analyticsValue),
+        analytics: {
+          profiles: data(analyticsValue),
+          processing: analyticsResponse.processing ?? false,
+          processingStatus:
+            analyticsResponse.processingStatus ??
+            (analyticsResponse.processing ? 'processing' : 'ready'),
+        },
         trainingLoad: data(trainingValue),
         upcomingStructuredWorkouts: (workoutsValue as any).data ?? [],
         completeness: {
           rawSamplesIncluded: false,
           cloudOnly: true,
+          analyticsProcessing: analyticsResponse.processing ?? false,
           note: 'Request raw channels only for a specific analysis question.',
         },
       },
