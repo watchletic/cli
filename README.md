@@ -2,7 +2,14 @@
 
 The official Node 20+ command-line client for the Watchletic Data API. It reads and changes remotely meaningful Watchletic cloud data for Watchletic Club members, exports activities, and gives AI agents a bounded deterministic context without exposing provider credentials.
 
-The canonical repository will be [watchletic/cli](https://github.com/watchletic/cli), and the npm package will be `@watchletic/cli`. This local checkout is not connected to a remote or published yet.
+The canonical repository is [watchletic/cli](https://github.com/watchletic/cli), and the npm package is `@watchletic/cli`.
+
+## Installation
+
+```sh
+npm install --global @watchletic/cli
+watchletic auth login
+```
 
 ## Local development
 
