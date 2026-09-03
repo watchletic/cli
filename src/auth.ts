@@ -91,6 +91,7 @@ export async function login(accessMode: 'read' | 'full', sessionName: string) {
   } finally {
     clearTimeout(timeout)
     server.close()
+    server.closeAllConnections()
   }
 }
 
