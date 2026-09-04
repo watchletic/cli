@@ -6,14 +6,13 @@ import { login, logout } from './auth.js'
 import { redactedStatus } from './config.js'
 import { CliError, ExitCode } from './errors.js'
 import { confirmMutation, output, readJson, writeDownload } from './io.js'
-import { buildAgentContext } from './context.js'
 
 const program = new Command()
 program.exitOverride()
 program
   .name('watchletic')
   .description('Work with your Watchletic data')
-  .version('0.1.0')
+  .version('0.2.0')
   .option('--json', 'emit stable JSON output')
   .option('--yes', 'confirm a mutation non-interactively')
   .option(
@@ -571,57 +570,10 @@ program
       Math.max(Math.trunc(Number(options.recent)) || 25, 1),
       100,
     )
-    const [
-      settingsValue,
-      activitiesValue,
-      readinessValue,
-      analyticsValue,
-      trainingValue,
-      fitnessValue,
-      workoutsValue,
-    ] = await Promise.all([
-      apiRequest('/settings'),
-      apiRequest(
-        `/activities${query({ from: `${from}T00:00:00Z`, to: `${today}T23:59:59Z`, limit: recentLimit })}`,
-      ),
-      apiRequest('/readiness'),
-      apiRequest('/analytics'),
-      apiRequest('/training-load'),
-      apiRequest(
-        `/analytics/fitness${query({ scope: 'all', range: '90d', anchorDate: today, timeZone })}`,
-      ),
-      apiRequest(
-        `/structured-workouts${query({ from: today, to, scheduled: true, limit: 21 })}`,
-      ),
-    ])
-    const analyticsResponse = analyticsValue as {
-      data?: unknown
-      processing?: boolean
-      processingStatus?: 'waiting' | 'processing' | 'ready'
-    }
-    show(
-      buildAgentContext({
-        generatedAt: new Date().toISOString(),
-        from,
-        to,
-        timeZone,
-        requestedRecentActivities: recentLimit,
-        settings: data(settingsValue),
-        activities: (activitiesValue as any).data ?? [],
-        readiness: ((readinessValue as any).data ?? []).filter(
-          (entry: any) => entry.date >= from,
-        ),
-        analytics: {
-          data: data(analyticsValue),
-          processing: analyticsResponse.processing ?? false,
-          processingStatus: analyticsResponse.processingStatus,
-        },
-        trainingLoad: data(trainingValue),
-        fitness: data(fitnessValue),
-        structuredWorkouts: (workoutsValue as any).data ?? [],
-      }),
-      true,
-    )
+    const response = (await apiRequest(
+      `/context${query({ from, to, recent: recentLimit, timeZone })}`,
+    )) as { data?: unknown }
+    show(response.data ?? response, true)
   })
 
 function addCrudCommands(resource: 'routes' | 'layouts' | 'devices') {

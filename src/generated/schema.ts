@@ -45,7 +45,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List authorized CLI sessions in the Watchletic app */
+        /** List connected API clients in the Watchletic app */
         get: operations["listApiSessions"];
         put?: never;
         post?: never;
@@ -65,7 +65,7 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Revoke an authorized CLI session in the Watchletic app */
+        /** Revoke a connected API client in the Watchletic app */
         delete: operations["revokeApiSession"];
         options?: never;
         head?: never;
@@ -81,7 +81,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Revoke a CLI session using its access or refresh credential */
+        /** Revoke a connected client using its access or refresh credential */
         post: operations["revokeCurrentApiSession"];
         delete?: never;
         options?: never;
@@ -115,6 +115,23 @@ export interface paths {
         };
         /** Get capabilities, enums, formats, and sanitized integration catalog */
         get: operations["getCatalog"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get bounded agent-ready training context using schema version 2 */
+        get: operations["getTrainingContext"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1194,10 +1211,12 @@ export interface components {
         ApiSession: {
             id: string;
             name: string;
+            clientId?: string;
             /** @enum {string} */
-            clientId?: "watchletic-cli";
+            clientType?: "cli" | "mcp";
             /** @enum {string} */
             accessMode: "read" | "full";
+            scopes?: string[];
             /** Format: date-time */
             accessTokenExpiresAt?: string;
             /** Format: date-time */
@@ -2106,6 +2125,44 @@ export interface operations {
                             integrations: Record<string, never>[];
                             deviceLocalOnly: string[];
                         };
+                    };
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            412: components["responses"]["PreconditionFailed"];
+            422: components["responses"]["UnprocessableContent"];
+            428: components["responses"]["PreconditionRequired"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            502: components["responses"]["BadGateway"];
+        };
+    };
+    getTrainingContext: {
+        parameters: {
+            query: {
+                from?: string;
+                to?: string;
+                recent?: number;
+                timeZone: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: Record<string, never>;
                     };
                 };
             };

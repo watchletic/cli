@@ -29,7 +29,7 @@ Use `WATCHLETIC_API_URL` to point at a local server and `WATCHLETIC_ACCESS_TOKEN
 
 ## Agent context
 
-`watchletic context` returns compact, deterministic JSON for training analysis and structured-workout planning. It includes recent activity metadata, readiness values and seven-day trends, summarized 90-day analytics, current fitness/fatigue/form, training-load configuration, and upcoming structured-workout summaries.
+`watchletic context` uses the canonical `/v1/context` endpoint and returns compact, deterministic schema-version-2 JSON for training analysis and structured-workout planning. It includes recent activity metadata, readiness values and seven-day trends, summarized 90-day analytics, current fitness/fatigue/form, training-load configuration, and upcoming structured-workout summaries.
 
 Full analytics curves, raw samples, live-tracking recipients, and complete structured-workout steps are intentionally excluded. Use the returned activity and structured-workout IDs with the focused `activities get`, `activities raw`, `analytics get`, or `structured-workouts get` commands when a specific question needs more detail.
 
