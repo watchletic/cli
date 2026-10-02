@@ -12,7 +12,11 @@ program.exitOverride()
 program
   .name('watchletic')
   .description('Work with your Watchletic data')
-  .version('0.2.0')
+  .version(
+    JSON.parse(
+      fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
+    ).version,
+  )
   .option('--json', 'emit stable JSON output')
   .option('--yes', 'confirm a mutation non-interactively')
   .option(
@@ -748,8 +752,7 @@ try {
   await program.parseAsync()
 } catch (error) {
   if (error instanceof CommanderError) {
-    process.exitCode =
-      error.code === 'commander.helpDisplayed' ? 0 : ExitCode.validation
+    process.exitCode = error.exitCode === 0 ? 0 : ExitCode.validation
     process.exit()
   }
   const cliError =
