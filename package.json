@@ -1,6 +1,6 @@
 {
   "name": "@watchletic/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Official CLI for the Watchletic Data API",
   "type": "module",
   "bin": {
@@ -41,10 +41,12 @@
   "license": "MIT",
   "dependencies": {
     "commander": "14.0.0",
-    "openapi-fetch": "0.14.0"
+    "openapi-fetch": "0.14.0",
+    "proper-lockfile": "4.1.2"
   },
   "devDependencies": {
     "@types/node": "22.20.1",
+    "@types/proper-lockfile": "4.1.4",
     "openapi-typescript": "7.9.1",
     "tsup": "8.5.0",
     "tsx": "4.20.5",

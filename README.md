@@ -48,3 +48,19 @@ Every mutation prints its exact before/after value and asks for confirmation. No
 - `7` partial bulk export
 - `8` network or server failure
 - `130` cancelled by the user
+
+### Session lifetime and concurrent commands
+
+Access tokens last one hour. The CLI refreshes saved credentials automatically;
+each successful refresh renews the connection for 180 days. Connections can be
+revoked in Watchletic's API access settings or with `watchletic auth logout`.
+Existing connections receive the longer lifetime on their next successful refresh.
+
+Commands share a credential lock, re-read the latest saved tokens under that lock,
+and save rotated tokens before releasing it. Login and logout use the same lock.
+A terminated process's abandoned lock can be recovered after 30 seconds.
+Update all CLI installations sharing a configuration directory to get this protection.
+`WATCHLETIC_ACCESS_TOKEN` overrides saved credentials and cannot refresh itself.
+
+If the server rotates a token but its response is lost, signing in again may still
+be necessary: the server rejects reuse of an already rotated refresh token.

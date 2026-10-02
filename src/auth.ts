@@ -6,6 +6,7 @@ import {
   clearCredentials,
   readCredentials,
   storeCredentials,
+  withCredentialLock,
 } from './config.js'
 import { CliError, ExitCode } from './errors.js'
 
@@ -86,7 +87,7 @@ export async function login(accessMode: 'read' | 'full', sessionName: string) {
       redirectUri,
       codeVerifier: verifier,
     })
-    storeCredentials(credentials)
+    await withCredentialLock(async () => storeCredentials(credentials))
     return { authorized: true, accessMode, sessionName }
   } finally {
     clearTimeout(timeout)
@@ -97,12 +98,18 @@ export async function login(accessMode: 'read' | 'full', sessionName: string) {
 
 export async function logout() {
   const environmentToken = process.env.WATCHLETIC_ACCESS_TOKEN
+  if (environmentToken) return revokeSession(environmentToken)
+  return withCredentialLock(() => revokeSession())
+}
+
+async function revokeSession(environmentToken?: string) {
   try {
     const credentials = environmentToken ? null : readCredentials()
     const accessToken = environmentToken ?? credentials?.accessToken
     if (!accessToken && !credentials?.refreshToken) return { revoked: false }
     const response = await fetch(`${baseUrl}/auth/revoke`, {
       method: 'POST',
+      signal: AbortSignal.timeout(30_000),
       headers: {
         'Content-Type': 'application/json',
         ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),

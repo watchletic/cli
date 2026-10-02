@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto'
 import {
   readCredentials,
   storeCredentials,
+  withCredentialLock,
   type Credentials,
 } from './config.js'
 import { CliError, ExitCode, exitCodeForApi } from './errors.js'
@@ -52,6 +53,7 @@ export async function unauthenticatedRequest(path: string, body: unknown) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(30_000),
     })
   } catch (error) {
     throw new CliError(
@@ -66,30 +68,32 @@ export async function unauthenticatedRequest(path: string, body: unknown) {
 async function accessToken() {
   if (process.env.WATCHLETIC_ACCESS_TOKEN)
     return process.env.WATCHLETIC_ACCESS_TOKEN
-  const credentials = readCredentials()
-  if (!credentials)
-    throw new CliError(
-      'Run `watchletic auth login` first.',
-      ExitCode.authentication,
+  return withCredentialLock(async () => {
+    const credentials = readCredentials()
+    if (!credentials)
+      throw new CliError(
+        'Run `watchletic auth login` first.',
+        ExitCode.authentication,
+      )
+    if (
+      new Date(credentials.accessTokenExpiresAt).getTime() >
+      Date.now() + 60_000
     )
-  if (
-    new Date(credentials.accessTokenExpiresAt).getTime() >
-    Date.now() + 60_000
-  )
-    return credentials.accessToken
-  if (new Date(credentials.refreshTokenExpiresAt).getTime() <= Date.now()) {
-    throw new CliError(
-      'The Watchletic session has expired. Sign in again.',
-      ExitCode.authentication,
-    )
-  }
-  const refreshed = await unauthenticatedRequest('/auth/token', {
-    grantType: 'refresh_token',
-    clientId: 'watchletic-cli',
-    refreshToken: credentials.refreshToken,
+      return credentials.accessToken
+    if (new Date(credentials.refreshTokenExpiresAt).getTime() <= Date.now()) {
+      throw new CliError(
+        'The Watchletic session has expired. Sign in again.',
+        ExitCode.authentication,
+      )
+    }
+    const refreshed = await unauthenticatedRequest('/auth/token', {
+      grantType: 'refresh_token',
+      clientId: 'watchletic-cli',
+      refreshToken: credentials.refreshToken,
+    })
+    storeCredentials(refreshed)
+    return refreshed.accessToken
   })
-  storeCredentials(refreshed)
-  return refreshed.accessToken
 }
 
 async function throwApiError(response: Response): Promise<never> {

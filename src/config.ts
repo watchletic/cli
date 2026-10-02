@@ -1,6 +1,8 @@
 import * as fs from 'node:fs'
 import * as os from 'node:os'
 import * as path from 'node:path'
+import { lock } from 'proper-lockfile'
+import { CliError, ExitCode } from './errors.js'
 
 export type Credentials = {
   accessToken: string
@@ -88,4 +90,37 @@ function redact(value: string) {
   return value.length < 12
     ? '[redacted]'
     : `${value.slice(0, 6)}…${value.slice(-4)}`
+}
+
+// Lock the directory, not credentials.json: credential writes replace that file
+// atomically. All processes must re-read credentials after acquiring this lock.
+export async function withCredentialLock<T>(
+  operation: () => Promise<T>,
+): Promise<T> {
+  const directory = configurationDirectory()
+  fs.mkdirSync(directory, { recursive: true, mode: 0o700 })
+  fs.chmodSync(directory, 0o700)
+  const canonicalDirectory = fs.realpathSync(directory)
+  let release: () => Promise<void>
+  try {
+    release = await lock(canonicalDirectory, {
+      lockfilePath: path.join(canonicalDirectory, 'credentials.lock'),
+      stale: 30_000,
+      update: 10_000,
+      retries: { retries: 400, minTimeout: 100, maxTimeout: 100 },
+    })
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ELOCKED') {
+      throw new CliError(
+        'Another Watchletic command is updating your session. Try again shortly.',
+        ExitCode.network,
+      )
+    }
+    throw error
+  }
+  try {
+    return await operation()
+  } finally {
+    await release()
+  }
 }
